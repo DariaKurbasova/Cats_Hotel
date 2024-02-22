@@ -7,8 +7,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainPageController::class, 'index']);
 
+// ToDo Авторизация
 Route::prefix('admin')->group(function () {
-    Route::get('rooms', [RoomsController::class, 'index']);
+    Route::prefix('rooms')->group(function () {
+        Route::get('/', [RoomsController::class, 'index']);
+        Route::post('list', [RoomsController::class, 'getList']);
+    });
 });
 
 Route::prefix('booking')->group(function () {

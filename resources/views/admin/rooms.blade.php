@@ -3,5 +3,5 @@
 @section('content')
     <h1>Вольеры</h1>
 
-    <admin-rooms :rooms="{{ $rooms->toJson() }}"/>
+    <admin-rooms/>
 @endsection
