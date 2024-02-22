@@ -17,6 +17,6 @@ class BookingController extends Controller
 
     public function selectRoom(Room $room): JsonResponse
     {
-
+        return response()->json(['status' => 'ok']);
     }
 }
