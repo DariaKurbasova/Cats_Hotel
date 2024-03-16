@@ -1,52 +1,29 @@
 <template>
     <div class="rooms-list">
-        <data-table :items="rooms"
-                    :headers="headers"
-                    ref="table"
-                    rowsPerPageMessage="Отображать на странице:"
-                    rowsOfPageSeparatorMessage="из"/>
+        <data-table url="/admin/rooms/list" :columns="columns" ref="table"/>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
-import Vue3EasyDataTable from 'vue3-easy-data-table';
+import DataTable from "../../common/DataTable.vue"
 
 export default {
     name: "AdminRoomsList",
     components: {
-        'data-table': Vue3EasyDataTable,
+        'data-table': DataTable,
     },
     data: function () {
         return {
-            rooms: [],
-            headers: [
-                {value: 'name', text: 'Название'},
-                {value: 'size', text: 'Тип'},
-                {value: 'description', text: 'Описание'},
-                {value: 'is_valid', text: 'Свободен'},
+            columns: [
+                {value: 'name', text: 'Название', sortable: true},
+                {value: 'size', text: 'Тип', sortable: true},
+                {value: 'description', text: 'Описание', sortable: true},
+                {value: 'is_valid', text: 'Свободен', sortable: true},
             ],
-            total: 0,
-            page: 1,
         };
     },
     methods: {
-        getRooms: function () {
-            // ToDo Настроить serverOptions и поведение таблицы
 
-            // ToDo Вынести работу с datatable в отдельный компонент
-            axios.post('/admin/rooms/list', {
-                page: this.$refs.table.currentPaginationNumber,
-                per_page: this.$refs.table.rowsPerPageActiveOption,
-            }).then((response) => {
-                this.rooms = response.data.items;
-                this.total = response.data.total;
-                this.$refs.table.clientItemsLength = response.data.total;
-            })
-        },
     },
-    mounted() {
-        this.getRooms();
-    }
 }
 </script>
