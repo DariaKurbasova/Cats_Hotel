@@ -5,7 +5,23 @@
                      :server-items-length="10"
                      :loading="loading"
                      rowsPerPageMessage="Отображать на странице:"
-                     rowsOfPageSeparatorMessage="из"/>
+                     rowsOfPageSeparatorMessage="из">
+        <template v-for="filter in filterOptions" #[getSlotName(filter.field)]="header">
+            <div class="filter-column">
+                {{ header.text }}
+                <div v-if="filter.type === 'text'" class="filter-menu">
+                    <input v-model="filterValues[filter.field]" @click.prevent.stop/>
+                </div>
+                <div v-if="filter.type === 'list'" class="filter-menu">
+                    <select v-model="filterValues[filter.field]" @click.prevent.stop>
+                        <option v-for="(option, label) in filter.options" :value="label">
+                            {{ option }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </template>
+    </vue3-data-table>
 </template>
 
 <script>
@@ -26,6 +42,10 @@ export default {
             required: true,
             type: Array,
         },
+        filterOptions: {
+            default: [],
+            type: Array,
+        },
     },
     data: function () {
         return {
@@ -39,9 +59,11 @@ export default {
                 sortType: 'asc',
             },
             loading: false,
+            filterValues: this.getFilterValues(),
         };
     },
     methods: {
+        // ToDo Стили фильтров
         getData: function () {
             this.loading = true;
             axios.post(this.url, {
@@ -49,6 +71,7 @@ export default {
                 per_page: this.options.rowsPerPage,
                 sort_by: this.options.sortBy,
                 sort_dir: this.options.sortType,
+                filters: this.getCleanFilters(),
             }).then((response) => {
                 this.rows = response.data.items;
                 this.total = response.data.total;
@@ -62,6 +85,21 @@ export default {
                 sortBy: 'id',
                 sortType: 'asc',
             };
+        },
+        getSlotName: function (filter) {
+            return 'header-' + filter;
+        },
+        getFilterValues: function () {
+            let result = {};
+
+            this.filterOptions.forEach(option => {
+                result[option.field] = '';
+            });
+
+            return result;
+        },
+        getCleanFilters: function () {
+            return Object.fromEntries(Object.entries(this.filterValues).filter(([_, v]) => v));
         }
     },
     mounted() {
@@ -81,6 +119,12 @@ export default {
             this.options = result;
 
             this.getData();
+        },
+        filterValues: {
+            handler() {
+                this.getData();
+            },
+            deep: true
         }
     },
 }

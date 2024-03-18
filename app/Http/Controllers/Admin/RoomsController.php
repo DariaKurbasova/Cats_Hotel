@@ -26,6 +26,14 @@ class RoomsController extends Controller
                 'is_valid',
             ]);
 
-        return response()->json(DataTableService::getData($request, $query));
+        $service = new DataTableService($request, $query);
+
+        $data = $service->find()
+            ->modifyColumns([
+                'is_valid' => fn(int $val) => !$val ? 'Нет' : 'Да',
+            ])
+            ->getData();
+
+        return response()->json($data);
     }
 }
