@@ -8,10 +8,10 @@
 
 <script>
 import axios from 'axios';
-import Room from "./Room.vue";
+import Room from './Room.vue';
 
 export default {
-    name: "RoomsList",
+    name: 'RoomsList',
     components: {
         Room,
     },

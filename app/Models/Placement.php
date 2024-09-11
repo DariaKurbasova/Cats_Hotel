@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Placement extends Model
+class Placement extends BaseModel
 {
-    use SoftDeletes;
-
     protected $fillable = [
         'date_from',
         'date_to',

@@ -2,7 +2,7 @@
     <vue3-data-table :items="rows"
                      :headers="columns"
                      v-model:server-options="options"
-                     :server-items-length="10"
+                     :server-items-length="total"
                      :loading="loading"
                      rowsPerPageMessage="Отображать на странице:"
                      rowsOfPageSeparatorMessage="из">
@@ -29,7 +29,7 @@ import axios from 'axios';
 import Vue3EasyDataTable from 'vue3-easy-data-table';
 
 export default {
-    name: "DataTable",
+    name: 'DataTable',
     components: {
         'vue3-data-table': Vue3EasyDataTable,
     },
@@ -76,6 +76,13 @@ export default {
                 this.rows = response.data.items;
                 this.total = response.data.total;
                 this.loading = false;
+            }).catch((response) => {
+                this.rows = [];
+                this.total = 0;
+                this.options.page = 1;
+                this.loading = false;
+
+                alert('Произошла ошибка!'); // ToDo Показывать красивое окошко с ошибкой
             })
         },
         getDefaultOptions: function () {

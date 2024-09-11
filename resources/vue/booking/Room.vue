@@ -7,7 +7,7 @@
 
 <script>
 export default {
-    name: "Room",
+    name: 'Room',
     props: {
         room: {
             type: Object,

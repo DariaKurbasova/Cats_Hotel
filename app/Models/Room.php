@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 
-class Room extends Model
+class Room extends BaseModel
 {
-    use SoftDeletes, HasFactory;
+    use HasFactory;
 
     protected $fillable = [
         'name',

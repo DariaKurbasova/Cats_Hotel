@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import DataTable from "../../common/DataTable.vue"
+import DataTable from '../../common/DataTable.vue'
 
 export default {
-    name: "AdminRoomsList",
+    name: 'AdminRoomsList',
     components: {
         'data-table': DataTable,
     },

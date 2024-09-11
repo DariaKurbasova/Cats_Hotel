@@ -19,6 +19,7 @@ class RoomsController extends Controller
     public function getList(Request $request): JsonResponse
     {
         $query = Room::query()
+            ->filter($request->get('filters', []))
             ->select([
                 'name',
                 'size',
