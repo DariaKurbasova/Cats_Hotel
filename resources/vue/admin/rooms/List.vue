@@ -1,6 +1,12 @@
 <template>
     <div class="rooms-list">
-        <data-table url="/admin/rooms/list" :columns="columns" ref="table" :filter-options="filterOptions"/>
+        <data-table url="/admin/rooms/list"
+                    :columns="columns"
+                    ref="table"
+                    class="pointer"
+                    :filter-options="filterOptions"
+                    :on-row-click="openRoomModal"
+        />
     </div>
 </template>
 
@@ -53,7 +59,14 @@ export default {
         };
     },
     methods: {
+        openRoomModal(row, e) {
+            const tr = e.target.closest('tr');
+            tr.classList.add('loading');
 
+            // ToDo Открытие диалогового окна и запрос на получение данных
+
+            tr.classList.remove('loading');
+        },
     },
 }
 </script>

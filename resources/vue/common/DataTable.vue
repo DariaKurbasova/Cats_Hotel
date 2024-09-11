@@ -4,6 +4,7 @@
                      v-model:server-options="options"
                      :server-items-length="total"
                      :loading="loading"
+                     @click-row="onRowClick"
                      rowsPerPageMessage="Отображать на странице:"
                      rowsOfPageSeparatorMessage="из">
         <template v-for="filter in filterOptions" #[getSlotName(filter.field)]="header">
@@ -39,13 +40,17 @@ export default {
             required: true,
         },
         columns: {
-            required: true,
             type: Array,
+            required: true,
         },
         filterOptions: {
-            default: [],
             type: Array,
+            default: [],
         },
+        onRowClick: {
+            type: Function,
+            default: () => {},
+        }
     },
     data: function () {
         return {

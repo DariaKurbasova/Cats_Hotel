@@ -47,3 +47,14 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.vue3-easy-data-table.pointer {
+    tbody tr {
+        cursor: pointer;
+    }
+
+    tbody tr.loading {
+        opacity: .50;
+        cursor: progress !important;
+    }
+}
